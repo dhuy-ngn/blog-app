@@ -1,6 +1,9 @@
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { Form, json, Link, useLoaderData } from '@remix-run/react';
 import { Like } from 'typeorm';
+import { Button } from '~/components/ui/button';
+import { Input } from '~/components/ui/input';
+import PostListWrapper from '~/components/widgets/post-list-wrapper';
 
 import AppDataSource from '~/db.server';
 import { PostEntity } from '~/db/entities/post.entity';
@@ -12,15 +15,6 @@ export const loader = async ({request}: LoaderFunctionArgs) => {
   
   return json(posts)
 };
-
-export const action = async () => {
-  const postRepository = AppDataSource.getRepository(PostEntity);
-  const emptyPost = await postRepository.save({
-    title: 'New Post',
-    content: 'Hello World!'
-  });
-  return json(emptyPost);
-}
 
 async function findPostWithTitleContaining(searchString: string | null) {
   const postRepository = AppDataSource.getRepository(PostEntity);
@@ -42,15 +36,20 @@ export default function PostList() {
   return (
     <>
       <Form role="search">
-        <input
+        <Input
           name="q"
           placeholder='Search posts...'
         />
       </Form>
       <Form method='post'>
-        <button className="bg-slate-400 border-2 border-slate-400 text-white rounded-xl px-6 py-4" type='submit'>Add Post</button>
+        <Link to='/posts/new'>
+        <Button type='button'>Add Post</Button>
+        </Link>
       </Form>
-      { posts.length === 0 ? <>No posts yet</> : posts.map((post) => <Link to={`${post.id}`} key={ post.id }>{ post.title } - { post.content }</Link>) }
+      { posts.length === 0
+        ? <>No posts yet</>
+        : <PostListWrapper posts={ posts }/>
+      }
     </>
   )
 }

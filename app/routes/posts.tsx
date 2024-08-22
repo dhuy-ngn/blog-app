@@ -1,4 +1,4 @@
-import { Form, json, useLoaderData } from '@remix-run/react';
+import { Form, json, Link, useLoaderData } from '@remix-run/react';
 
 import AppDataSource from '~/db.server';
 import { PostEntity } from '~/db/entities/post.entity';
@@ -27,7 +27,7 @@ export default function PostList() {
       <Form method='post'>
         <button type='submit'>Add Post</button>
       </Form>
-      { posts.length === 0 ? <>No posts yet</> : posts.map((post) => <p key={ post.id }>{ post.title } - { post.content }</p>) }
+      { posts.length === 0 ? <>No posts yet</> : posts.map((post) => <Link to={`${post.id}`} key={ post.id }>{ post.title } - { post.content }</Link>) }
     </>
   )
 }

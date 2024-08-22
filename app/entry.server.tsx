@@ -18,6 +18,7 @@ const ABORT_DELAY = 5_000;
 AppDataSource.initialize()
   .then(() => {
     console.log("Database initialized");
+    console.log('Entities:', AppDataSource.entityMetadatas.map(em => em.name));
   })
   .catch((error) => {
     console.error("Error during database initialization:", error);

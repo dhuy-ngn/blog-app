@@ -11,8 +11,17 @@ import { createReadableStreamFromReadable } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
 import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
+import AppDataSource from '~/db.server';
 
 const ABORT_DELAY = 5_000;
+
+AppDataSource.initialize()
+  .then(() => {
+    console.log("Database initialized");
+  })
+  .catch((error) => {
+    console.error("Error during database initialization:", error);
+  });
 
 export default function handleRequest(
   request: Request,

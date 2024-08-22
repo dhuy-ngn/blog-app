@@ -13,7 +13,7 @@ export const loader = async ({request}: LoaderFunctionArgs) => {
   const q = url.searchParams.get("q");
   const posts = await findPostWithTitleContaining(q)
   
-  return json(posts)
+  return json({q, posts})
 };
 
 async function findPostWithTitleContaining(searchString: string | null) {
@@ -31,7 +31,7 @@ async function findPostWithTitleContaining(searchString: string | null) {
 }
 
 export default function PostList() {
-  const posts = useLoaderData<PostEntity[]>();
+  const {q, posts} = useLoaderData<typeof loader>();
 
   return (
     <>
@@ -39,6 +39,7 @@ export default function PostList() {
         <Input
           name="q"
           placeholder='Search posts...'
+          defaultValue={q || ""}
         />
       </Form>
       <Form method='post'>

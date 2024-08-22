@@ -35,11 +35,13 @@ export default function PostList() {
 
   return (
     <>
-      <Form role="search">
+      <div className="flex gap-4 my-8">
+      <Form role="search" className="flex-1">
         <Input
           name="q"
           placeholder='Search posts...'
-          defaultValue={q || ""}
+          defaultValue={ q || "" }
+          type='search'
         />
       </Form>
       <Form method='post'>
@@ -47,6 +49,8 @@ export default function PostList() {
         <Button type='button'>Add Post</Button>
         </Link>
       </Form>
+      </div>
+      
       { posts.length === 0
         ? <>No posts yet</>
         : <PostListWrapper posts={ posts }/>

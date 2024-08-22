@@ -10,7 +10,8 @@ interface PostPreviewProps {
 
 export default function PostPreview({title, content, id}: PostPreviewProps) {
   return (
-    <Card>
+    <Link to={`${id}`}>
+      <Card>
       <CardHeader className="font-semibold text-2xl text-gray-700">
         {title}
       </CardHeader>
@@ -28,5 +29,7 @@ export default function PostPreview({title, content, id}: PostPreviewProps) {
         </Link>
       </CardFooter>
     </Card>
+    </Link>
+    
   )
 }

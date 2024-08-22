@@ -1,6 +1,10 @@
 import { json, type ActionFunctionArgs, type LoaderFunctionArgs } from '@remix-run/node';
 import { Form, redirect, useLoaderData, useNavigate } from '@remix-run/react';
 import invariant from "tiny-invariant";
+import { Button } from '~/components/ui/button';
+import { Input } from '~/components/ui/input';
+import { Label } from '~/components/ui/label';
+import { Textarea } from '~/components/ui/textarea';
 import AppDataSource from '~/db.server';
 import { PostEntity } from '~/db/entities/post.entity';
 
@@ -23,24 +27,24 @@ export default function EditPost() {
 
   return (
     <Form method='post' key={ post.id }>
-      <label>
+      <Label>
         <span>Title</span>
-        <input
+        <Input
           defaultValue={ post.title }
           name="title"
           type="text"
           placeholder="Title"/>
-      </label>
-      <label>
+      </Label>
+      <Label>
         <span>Content</span>
-        <textarea
+        <Textarea
           defaultValue={ post.content }
           name="content"
           placeholder="Content"/>
-      </label>
+      </Label>
       <p>
-        <button type="submit">Save</button>
-        <button onClick={ () => navigate(-1) }type="button">Cancel</button>
+        <Button type="submit">Save</Button>
+        <Button onClick={ () => navigate(-1) }type="button">Cancel</Button>
       </p>
     </Form>
   )

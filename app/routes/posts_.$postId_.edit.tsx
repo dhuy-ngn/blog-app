@@ -1,5 +1,5 @@
 import { json, type ActionFunctionArgs, type LoaderFunctionArgs } from '@remix-run/node';
-import { Form, Link, redirect, useLoaderData } from '@remix-run/react';
+import { Form, redirect, useLoaderData, useNavigate } from '@remix-run/react';
 import invariant from "tiny-invariant";
 import AppDataSource from '~/db.server';
 import { PostEntity } from '~/db/entities/post.entity';
@@ -19,6 +19,7 @@ export const loader = async ({ params: { postId } }: LoaderFunctionArgs) => {
 
 export default function EditPost() {
   const post = useLoaderData<PostEntity>();
+  const navigate = useNavigate();
 
   return (
     <Form method='post' key={ post.id }>
@@ -39,7 +40,7 @@ export default function EditPost() {
       </label>
       <p>
         <button type="submit">Save</button>
-        <Link to={ `/posts/${ post.id }` }>Cancel</Link>
+        <button onClick={ () => navigate(-1) }type="button">Cancel</button>
       </p>
     </Form>
   )

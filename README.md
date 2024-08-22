@@ -1,40 +1,32 @@
-# Welcome to Remix!
+# Blog App - A simple server-side web app with basic CRUD operation, made with Remix
 
-- 📖 [Remix docs](https://remix.run/docs)
+## Features
+- Load all posts and filter posts by their names
+- Create a new post
+- Update an existing post
+- Delete a post
 
 ## Development
+- Make an .env file in the app directory> An example .env is provided in .env.example
+  ```shellscript
+  POSTGRES_USER=your_username
+  POSTGRES_PASSWORD=your_password
+  POSTGRES_DB=your_db_name
+  ```
 
-Run the dev server:
+- Install Docker Desktop at [Docker Homepage](https://www.docker.com/products/docker-desktop/) and follow the instructions
 
-```shellscript
-npm run dev
-```
+- Run the following command to set up the database
+  ```shellscript
+  docker compose up -d
+  ```
+- Install the necessary ```npm``` packages:
+  ```shellscript
+  npm install
+  ```
 
-## Deployment
+- Run the dev server:
 
-First, build your app for production:
-
-```sh
-npm run build
-```
-
-Then run the app in production mode:
-
-```sh
-npm start
-```
-
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-- `build/server`
-- `build/client`
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
+  ```shellscript
+  npm run dev
+  ```

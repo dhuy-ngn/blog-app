@@ -6,9 +6,9 @@ const AppDataSource = new DataSource({
   type: "postgres",
   host: "localhost",
   port: 5432,
-  username: process.env.VITE_POSTGRES_USER,
-  password: process.env.VITE_POSTGRES_PASSWORD,
-  database: process.env.VITE_POSTGRES_DB,
+  username: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DB,
   entities: [PostEntity],
   logging: true,
   synchronize: true

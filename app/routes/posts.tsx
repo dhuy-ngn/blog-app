@@ -8,7 +8,7 @@ import { PostEntity } from '~/db/entities/post.entity';
 export const loader = async ({request}: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
-  const posts = await findPostWithTitleContaining(String(q))
+  const posts = await findPostWithTitleContaining(q)
   
   return json(posts)
 };
@@ -22,20 +22,18 @@ export const action = async () => {
   return json(emptyPost);
 }
 
-async function findPostWithTitleContaining(searchString: string) {
-  console.log({searchString})
+async function findPostWithTitleContaining(searchString: string | null) {
   const postRepository = AppDataSource.getRepository(PostEntity);
-
-  if (!searchString) {
-    return postRepository.find();
+  if (searchString) {
+    const formattedSearchString = searchString.trim();
+    return await postRepository.find({
+      where: {
+        title: Like(`%${formattedSearchString}%`)
+      }
+    });
   }
-
-  const formattedSearchString = searchString.trim();
-  return await postRepository.find({
-    where: {
-      title: Like(`%${formattedSearchString}%`)
-    }
-  });
+  
+  return await postRepository.find();
 }
 
 export default function PostList() {
@@ -50,7 +48,7 @@ export default function PostList() {
         />
       </Form>
       <Form method='post'>
-        <button type='submit'>Add Post</button>
+        <button className="bg-slate-400 border-2 border-slate-400 text-white rounded-xl px-6 py-4" type='submit'>Add Post</button>
       </Form>
       { posts.length === 0 ? <>No posts yet</> : posts.map((post) => <Link to={`${post.id}`} key={ post.id }>{ post.title } - { post.content }</Link>) }
     </>

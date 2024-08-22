@@ -1,5 +1,5 @@
 import { json, type LoaderFunctionArgs } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { Form, useLoaderData } from '@remix-run/react';
 import invariant from "tiny-invariant";
 import AppDataSource from '~/db.server';
 import { PostEntity } from '~/db/entities/post.entity';
@@ -23,7 +23,20 @@ export default function Post() {
   return (
     <>
       <h1>{post.title}</h1>
-      <p>{post.content}</p>
+      <p>{ post.content }</p>
+      
+      <Form
+        action="destroy"
+        method="post"
+        onSubmit={ (e) => {
+          const response = confirm("Are you sure you want to delete this post?");
+
+          if (!response) {
+            e.preventDefault();
+          }
+        } }>
+        <button type="submit">Delete</button>
+        </Form>
     </>
   )
 }

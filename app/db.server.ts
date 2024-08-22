@@ -1,14 +1,15 @@
+
 import { DataSource } from 'typeorm';
-import { Post } from '~/db/entities/post.entity';
+import { PostEntity } from '~/db/entities/post.entity';
 
 const AppDataSource = new DataSource({
   type: "postgres",
   host: "localhost",
   port: 5432,
-  username: import.meta.env.VITE_POSTGRES_USER,
-  password: import.meta.env.VITE_POSTGRES_PASSWORD,
-  database: import.meta.env.VITE_POSTGRES_DB,
-  entities: [Post],
+  username: process.env.VITE_POSTGRES_USER,
+  password: process.env.VITE_POSTGRES_PASSWORD,
+  database: process.env.VITE_POSTGRES_DB,
+  entities: [PostEntity],
   logging: true,
   synchronize: true
 });

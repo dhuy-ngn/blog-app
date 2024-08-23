@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs } from '@remix-run/node';
-import { Form, json, Link, useLoaderData } from '@remix-run/react';
+import { Form, json, Link, useLoaderData, useSearchParams } from '@remix-run/react';
 import { ILike } from 'typeorm';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
@@ -7,6 +7,7 @@ import PostListWrapper from '~/components/widgets/post-list-wrapper';
 
 import AppDataSource from '~/db.server';
 import { PostEntity } from '~/db/entities/post.entity';
+import { debounce } from '~/lib/debounce';
 
 export const loader = async ({request}: LoaderFunctionArgs) => {
   const url = new URL(request.url);
@@ -31,7 +32,14 @@ async function findPostWithTitleContaining(searchString: string | null) {
 }
 
 export default function PostList() {
-  const { q, posts } = useLoaderData<typeof loader>();
+  const { posts } = useLoaderData<typeof loader>();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleSearch = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
+    const params = new URLSearchParams();
+    params.set("q", event.target.value);
+    setSearchParams(params, { preventScrollReset: true });
+  }, 300);
 
   return (
     <>
@@ -40,8 +48,9 @@ export default function PostList() {
         <Input
           name="q"
           placeholder='Search posts...'
-          defaultValue={ q || "" }
+          defaultValue={ searchParams.get("q") || "" }
           type='search'
+          onChange={handleSearch}
         />
       </Form>
       <Form method='post'>

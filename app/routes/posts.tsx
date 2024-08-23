@@ -9,12 +9,12 @@ import AppDataSource from '~/db.server';
 import { PostEntity } from '~/db/entities/post.entity';
 import { debounce } from '~/lib/debounce';
 
-export const loader = async ({request}: LoaderFunctionArgs) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
-  const posts = await findPostWithTitleContaining(q)
-  
-  return json({q, posts})
+  const posts = await findPostWithTitleContaining(q);
+
+  return json({ q, posts });
 };
 
 async function findPostWithTitleContaining(searchString: string | null) {
@@ -22,12 +22,13 @@ async function findPostWithTitleContaining(searchString: string | null) {
   if (searchString) {
     const formattedSearchString = searchString.trim().toLowerCase();
     return await postRepository.find({
-      where: {
-        title: ILike(`%${formattedSearchString}%`)
-      }
+      where: [
+        { title: ILike(`%${formattedSearchString}%`) },
+        { content: ILike(`%${formattedSearchString}%`) },
+      ]
     });
   }
-  
+
   return await postRepository.find();
 }
 
@@ -44,26 +45,26 @@ export default function PostList() {
   return (
     <>
       <div className="flex gap-4 my-8">
-      <Form role="search" className="flex-1">
-        <Input
-          name="q"
-          placeholder='Search posts...'
-          defaultValue={ searchParams.get("q") || "" }
-          type='search'
-          onChange={handleSearch}
-        />
-      </Form>
-      <Form method='post'>
-        <Link to='/posts/new'>
-        <Button type='button'>Add Post</Button>
-        </Link>
-      </Form>
+        <Form role="search" className="flex-1">
+          <Input
+            name="q"
+            placeholder='Search posts...'
+            defaultValue={ searchParams.get("q") || "" }
+            type='search'
+            onChange={ handleSearch }
+          />
+        </Form>
+        <Form method='post'>
+          <Link to='/posts/new'>
+            <Button type='button'>Add Post</Button>
+          </Link>
+        </Form>
       </div>
-      
+
       { posts.length === 0
         ? <>No posts yet</>
-        : <PostListWrapper posts={ posts }/>
+        : <PostListWrapper posts={ posts } />
       }
     </>
-  )
+  );
 }

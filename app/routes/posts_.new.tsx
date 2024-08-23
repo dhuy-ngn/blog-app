@@ -18,18 +18,18 @@ export default function AddPost() {
         </CardHeader>
         <CardContent>
           <Label>
-            <span>Title</span>
-            <Input
+            Title
+          </Label>
+          <Input
               name="title"
               type="text"
               placeholder="Title" />
-          </Label>
           <Label>
-            <span>Content</span>
-            <Textarea
+            Content
+          </Label>
+          <Textarea
               name="content"
               placeholder="Content" />
-          </Label>
         </CardContent>
         <CardFooter className='flex gap-2 w-full justify-end'>
           <Button type="submit">Save</Button>

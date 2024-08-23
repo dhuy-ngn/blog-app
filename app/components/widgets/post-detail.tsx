@@ -1,4 +1,4 @@
-import { Link, useNavigate } from '@remix-run/react';
+import { Form, Link, useNavigate } from '@remix-run/react';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '~/components/ui/card';
 import { cn } from '~/lib/utils';
@@ -28,11 +28,11 @@ export default function PostDetail({ title, content, id, className }: PostDetail
             Back
           </Button>
           <div className='flex gap-2'>
-            <Link to={ `/posts/${id}/destroy` } className="text-sm text-gray-700">
+            <Form action="destroy" method="post" className="text-sm text-gray-700">
               <Button variant="ghost" className='text-red-500 hover:bg-red-500 hover:text-white'>
                 Delete
               </Button>
-            </Link>
+            </Form>
             <Link to={ `/posts/${id}/edit` } className="text-sm text-gray-700">
               <Button variant="outline">
                 Edit

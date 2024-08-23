@@ -1,7 +1,8 @@
 # Blog App - A simple server-side web app with basic CRUD operation, made with Remix
 
 ## Features
-- Load all posts and filter posts by their names
+- Load all posts and filter posts by their title and content
+  - The app will filter your posts as you type
 - Create a new post
 - Update an existing post
 - Delete a post

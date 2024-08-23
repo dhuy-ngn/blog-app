@@ -17,7 +17,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className='mx-8'>
+      <body  className='mx-4 lg:mx-auto max-w-7xl my-4'>
         {children}
         <ScrollRestoration />
         <Scripts />

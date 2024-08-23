@@ -1,6 +1,6 @@
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { Form, json, Link, useLoaderData } from '@remix-run/react';
-import { Like } from 'typeorm';
+import { ILike } from 'typeorm';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import PostListWrapper from '~/components/widgets/post-list-wrapper';
@@ -19,10 +19,10 @@ export const loader = async ({request}: LoaderFunctionArgs) => {
 async function findPostWithTitleContaining(searchString: string | null) {
   const postRepository = AppDataSource.getRepository(PostEntity);
   if (searchString) {
-    const formattedSearchString = searchString.trim();
+    const formattedSearchString = searchString.trim().toLowerCase();
     return await postRepository.find({
       where: {
-        title: Like(`%${formattedSearchString}%`)
+        title: ILike(`%${formattedSearchString}%`)
       }
     });
   }
@@ -31,7 +31,7 @@ async function findPostWithTitleContaining(searchString: string | null) {
 }
 
 export default function PostList() {
-  const {q, posts} = useLoaderData<typeof loader>();
+  const { q, posts } = useLoaderData<typeof loader>();
 
   return (
     <>

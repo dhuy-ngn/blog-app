@@ -51,7 +51,7 @@ export default function EditPost() {
             placeholder="Content" />
         </CardContent>
         <CardFooter className="flex gap-2 w-full justify-between">
-        <Button onClick={ () => navigate(-1) } variant="outline" type="button">
+          <Button onClick={ () => navigate(-1) } variant="outline" type="button">
             <XMarkIcon className="size-4 mr-1.5" />
             Cancel
           </Button>

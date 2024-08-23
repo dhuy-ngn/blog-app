@@ -62,7 +62,7 @@ export default function PostList() {
       </div>
 
       { posts.length === 0
-        ? <>No posts yet</>
+        ? <>No posts found</>
         : <PostListWrapper posts={ posts } />
       }
     </>

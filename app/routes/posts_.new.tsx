@@ -3,31 +3,44 @@ import { Form, redirect, useNavigate } from '@remix-run/react';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '~/components/ui/card';
 import { Input } from '~/components/ui/input';
+import { Label } from '~/components/ui/label';
 import { Textarea } from '~/components/ui/textarea';
 import AppDataSource from '~/db.server';
 import { PostEntity } from '~/db/entities/post.entity';
 
 export default function AddPost() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <Form method='post'>
       <Card>
         <CardHeader>
-          <Input name="title" type="text" placeholder="Title"/>
+          <h2 className='text-2xl font-bold'>Add new Post</h2>
         </CardHeader>
         <CardContent>
-          <Textarea name="content" placeholder="Content"/>
+          <Label>
+            <span>Title</span>
+            <Input
+              name="title"
+              type="text"
+              placeholder="Title" />
+          </Label>
+          <Label>
+            <span>Content</span>
+            <Textarea
+              name="content"
+              placeholder="Content" />
+          </Label>
         </CardContent>
-        <CardFooter>
+        <CardFooter className='flex gap-2 w-full justify-end'>
           <Button type="submit">Save</Button>
-          <Button type="button" variant="outline" onClick={() => navigate(-1)}>Cancel</Button>
+          <Button onClick={ () => navigate(-1) } variant="outline" type="button">Cancel</Button>
         </CardFooter>
       </Card>
     </Form>
-  )
+  );
 }
 
-export const action = async ({request}: ActionFunctionArgs) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
   const postRepository = AppDataSource.getRepository(PostEntity);
   const formData = await request.formData();
   const newPost = Object.fromEntries(formData);
@@ -35,4 +48,4 @@ export const action = async ({request}: ActionFunctionArgs) => {
   await postRepository.save(newPost);
 
   return redirect(`/posts`);
-}
+};

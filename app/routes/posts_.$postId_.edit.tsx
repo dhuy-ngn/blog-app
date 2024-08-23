@@ -2,6 +2,7 @@ import { json, type ActionFunctionArgs, type LoaderFunctionArgs } from '@remix-r
 import { Form, redirect, useLoaderData, useNavigate } from '@remix-run/react';
 import invariant from "tiny-invariant";
 import { Button } from '~/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader } from '~/components/ui/card';
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 import { Textarea } from '~/components/ui/textarea';
@@ -18,7 +19,7 @@ export const loader = async ({ params: { postId } }: LoaderFunctionArgs) => {
     throw new Response("Post not found", { status: 404 });
   }
 
-  return json(post)
+  return json(post);
 };
 
 export default function EditPost() {
@@ -26,32 +27,39 @@ export default function EditPost() {
   const navigate = useNavigate();
 
   return (
-    <Form method='post' key={ post.id }>
-      <Label>
-        <span>Title</span>
-        <Input
-          defaultValue={ post.title }
-          name="title"
-          type="text"
-          placeholder="Title"/>
-      </Label>
-      <Label>
-        <span>Content</span>
-        <Textarea
-          defaultValue={ post.content }
-          name="content"
-          placeholder="Content"/>
-      </Label>
-      <p>
-        <Button type="submit">Save</Button>
-        <Button onClick={ () => navigate(-1) }type="button">Cancel</Button>
-      </p>
+    <Form method='post'>
+      <Card>
+        <CardHeader>
+          <h2 className='text-2xl font-bold'>Edit Post</h2>
+        </CardHeader>
+        <CardContent>
+          <Label>
+            <span>Title</span>
+            <Input
+              defaultValue={ post.title }
+              name="title"
+              type="text"
+              placeholder="Title" />
+          </Label>
+          <Label>
+            <span>Content</span>
+            <Textarea
+              defaultValue={ post.content }
+              name="content"
+              placeholder="Content" />
+          </Label>
+        </CardContent>
+        <CardFooter className="flex gap-2 w-full justify-end">
+          <Button type="submit">Save</Button>
+          <Button onClick={ () => navigate(-1) } variant="outline" type="button">Cancel</Button>
+        </CardFooter>
+      </Card>
     </Form>
-  )
+  );
 }
 
-export const action = async({
-  params : {postId},
+export const action = async ({
+  params: { postId },
   request
 }: ActionFunctionArgs) => {
   invariant(postId, "Missing postId param");
@@ -61,5 +69,5 @@ export const action = async({
 
   await postRepository.update(postId, updates);
 
-  return redirect(`/posts/${ postId }`);
-}
+  return redirect(`/posts/${postId}`);
+};

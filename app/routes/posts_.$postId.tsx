@@ -1,8 +1,7 @@
 import { json, type LoaderFunctionArgs } from '@remix-run/node';
-import { Form, useLoaderData } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
 import invariant from "tiny-invariant";
-import { Button } from '~/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader } from '~/components/ui/card';
+import PostDetail from '~/components/widgets/post-detail';
 import AppDataSource from '~/db.server';
 import { PostEntity } from '~/db/entities/post.entity';
 
@@ -24,30 +23,7 @@ export default function Post() {
   
   return (
     <>
-      <Card>
-        <CardHeader>
-          <h1>{ post.title }</h1>
-        </CardHeader>
-        <CardContent>
-          <p>{ post.content }</p>
-        </CardContent>
-        <CardFooter>
-          <Form
-          action="destroy"
-          method="post"
-          onSubmit={ (e) => {
-            const response = confirm("Are you sure you want to delete this post?");
-
-            if (!response) {
-              e.preventDefault();
-            }
-          } }>
-        <Button variant="outline" type="submit">Delete</Button>
-        </Form>
-        </CardFooter>
-      </Card>
-      
-      
+      <PostDetail id={ post.id } title={ post.title } content={ post.content }/>
     </>
   )
 }

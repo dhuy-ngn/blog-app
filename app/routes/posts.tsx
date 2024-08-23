@@ -1,3 +1,4 @@
+import { PlusIcon } from '@heroicons/react/24/outline';
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { Form, json, Link, useLoaderData, useSearchParams } from '@remix-run/react';
 import { ILike } from 'typeorm';
@@ -56,7 +57,10 @@ export default function PostList() {
         </Form>
         <Form method='post'>
           <Link to='/posts/new'>
-            <Button type='button'>Add Post</Button>
+            <Button type='button'>
+              <PlusIcon className='size-4 mr-1.5' />
+              Add Post
+            </Button>
           </Link>
         </Form>
       </div>

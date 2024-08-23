@@ -1,3 +1,4 @@
+import { PaperAirplaneIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { json, type ActionFunctionArgs, type LoaderFunctionArgs } from '@remix-run/node';
 import { Form, redirect, useLoaderData, useNavigate } from '@remix-run/react';
 import invariant from "tiny-invariant";
@@ -34,24 +35,30 @@ export default function EditPost() {
         </CardHeader>
         <CardContent>
           <Label>
-            <span>Title</span>
-            <Input
-              defaultValue={ post.title }
-              name="title"
-              type="text"
-              placeholder="Title" />
+            Title
           </Label>
+          <Input
+            defaultValue={ post.title }
+            name="title"
+            type="text"
+            placeholder="Title" />
           <Label>
-            <span>Content</span>
-            <Textarea
-              defaultValue={ post.content }
-              name="content"
-              placeholder="Content" />
+            Content
           </Label>
+          <Textarea
+            defaultValue={ post.content }
+            name="content"
+            placeholder="Content" />
         </CardContent>
-        <CardFooter className="flex gap-2 w-full justify-end">
-          <Button type="submit">Save</Button>
-          <Button onClick={ () => navigate(-1) } variant="outline" type="button">Cancel</Button>
+        <CardFooter className="flex gap-2 w-full justify-between">
+        <Button onClick={ () => navigate(-1) } variant="outline" type="button">
+            <XMarkIcon className="size-4 mr-1.5" />
+            Cancel
+          </Button>
+          <Button type="submit">
+            <PaperAirplaneIcon className="size-4 mr-1.5" />
+            Save
+          </Button>
         </CardFooter>
       </Card>
     </Form>
